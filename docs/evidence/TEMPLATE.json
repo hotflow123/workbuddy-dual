@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "YYYY-MM-DDTHH:mm:ss.sssZ",
+  "capturedBy": "填写采集人/工单号",
+  "environment": {
+    "osVersion": "Windows 11 23H2 22631.x",
+    "locale": "zh-CN",
+    "accountPrivilege": "standard",
+    "diskFreeGb": 60,
+    "snapshotId": "快照名称或 ID",
+    "vmTool": "hyper-v"
+  },
+  "products": {
+    "workbuddy-cn": {
+      "officialSource": {
+        "pageUrl": "https://官方页面/下载",
+        "apiEndpoint": null,
+        "downloadHost": "官方下载主机名",
+        "observedAt": "YYYY-MM-DD"
+      },
+      "packages": [
+        {
+          "version": "5.8.3",
+          "url": "https://官方下载主机/安装包.exe",
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "authenticode": {
+            "status": "Valid",
+            "subject": "CN=..., O=..., C=CN",
+            "thumbprint": "证书指纹",
+            "notAfter": "YYYY-MM-DD"
+          },
+          "productName": "安装包内 ProductName",
+          "dataFolderName": ".workbuddy"
+        }
+      ],
+      "installer": {
+        "scope": "user",
+        "supportsCustomPath": true,
+        "customPathArgument": "实测确认的路径参数，例如 /D=",
+        "unattended": true,
+        "note": "说明如何确认无人值守可用，以及哪些界面仍会弹出"
+      },
+      "postInstall": {
+        "installLocation": "实测安装目录（脱敏，可用 <ROOT> 占位）",
+        "dataDirectory": "%USERPROFILE%\\.workbuddy",
+        "uninstallKey": "HKCU\\...\\Uninstall\\...",
+        "shortcuts": ["开始菜单快捷方式名称"],
+        "runningExecutable": "WorkBuddy.exe",
+        "productName": "WorkBuddy"
+      },
+      "update": {
+        "builtInUpdater": "present",
+        "controllable": false,
+        "note": "记录触发条件、是否有可逆控制方式；不确定时填 false"
+      },
+      "uninstall": {
+        "command": "卸载器路径与参数",
+        "removesUserData": "no",
+        "preservesOtherProduct": true
+      }
+    },
+    "workbuddy-ai": {
+      "officialSource": {
+        "pageUrl": "https://官方页面/下载",
+        "apiEndpoint": null,
+        "downloadHost": "官方下载主机名",
+        "observedAt": "YYYY-MM-DD"
+      },
+      "packages": [
+        {
+          "version": "5.8.4",
+          "url": "https://官方下载主机/安装包.exe",
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "authenticode": {
+            "status": "Valid",
+            "subject": "CN=..., O=..., C=CN",
+            "thumbprint": "证书指纹",
+            "notAfter": "YYYY-MM-DD"
+          },
+          "productName": "安装包内 ProductName",
+          "dataFolderName": ".workbuddy-ai"
+        }
+      ],
+      "installer": {
+        "scope": "user",
+        "supportsCustomPath": true,
+        "customPathArgument": "实测确认的路径参数",
+        "unattended": true,
+        "note": "说明如何确认无人值守可用"
+      },
+      "postInstall": {
+        "installLocation": "实测安装目录（脱敏）",
+        "dataDirectory": "%USERPROFILE%\\.workbuddy-ai",
+        "uninstallKey": "HKCU\\...\\Uninstall\\...",
+        "shortcuts": ["开始菜单快捷方式名称"],
+        "runningExecutable": "WorkBuddy AI.exe",
+        "productName": "WorkBuddy AI"
+      },
+      "update": {
+        "builtInUpdater": "present",
+        "controllable": false,
+        "note": "不确定时填 false"
+      },
+      "uninstall": {
+        "command": "卸载器路径与参数",
+        "removesUserData": "no",
+        "preservesOtherProduct": true
+      }
+    }
+  }
+}

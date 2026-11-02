@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 2,
+  "capturedAt": "2026-10-19T00:03:00+08:00",
+  "verifiedAt": "2026-10-19T00:20:00+08:00",
+  "capturedBy": "WorkBuddy 通过浏览器（用户已登录 Chromium）点击官网下载按钮获取",
+  "method": "只读取证：列归档条目、读 Authenticode、读 app.asar 元数据、解包到临时目录；未执行安装器，未修改系统",
+  "officialPages": {
+    "workbuddy-cn": "https://www.workbuddy.cn/",
+    "workbuddy-ai": "https://www.workbuddy.ai/"
+  },
+  "downloadTriggers": {
+    "workbuddy-cn": "「立即下载 高效工作」区域「当前设备 Windows 适用于 Windows」按钮",
+    "workbuddy-ai": "「当前设备 Windows 适用于 Windows」按钮"
+  },
+  "versionNote": "版本号随官方更新变化；本文件只记录 2026-10-19 00:03 抓到的具体包，不得写成固定期望值",
+  "toolRequirement": {
+    "required": "7-Zip 22 或更高（实测 24.09 可用）",
+    "reason": "官方包内层 app-64.7z 含较新压缩方法；随包分发的 7za 21.07 会报 Unsupported Method",
+    "fallback": "随包 7za 仅能处理旧格式包，遇到新方法时整包解包失败并如实报错"
+  },
+  "spaceRequirement": {
+    "cn": "解压后约 1.1 GB；部署需要 staging + 目标两份，实测约 2.4 GB 可用空间",
+    "note": "管理器按归档总解压体积 ×2 + 200MB 做空间预检并拒绝不足的情况"
+  },
+  "packages": [
+    {
+      "product": "workbuddy-cn",
+      "file": "workbuddy-cn-setup.exe",
+      "sizeBytes": 441094104,
+      "sha256": "824de10f3196c501004f540eb84ee881292fef2f5df9fb3fc48af9ea5366c03c",
+      "authenticode": {
+        "status": "Valid",
+        "subject": "CN=Tencent Technology (Shenzhen) Company Limited, O=Tencent Technology (Shenzhen) Company Limited, L=Shenzhen, S=Guangdong Province, C=CN",
+        "thumbprint": "2241B013E2D6B9AAD7590E8056BF5E17CB1C795B"
+      },
+      "versionInfo": {
+        "productName": "WorkBuddy",
+        "fileDescription": "WorkBuddy Desktop - AI Agent Desktop Application",
+        "fileVersion": "5.8.3"
+      },
+      "container": {
+        "type": "NSIS 3 Unicode 自解压（7-Zip 24 识别为 NSIS-3 Unicode）",
+        "outerEntries": 12,
+        "outerItems": [
+          "$PLUGINSDIR/app-64.7z (440,177,782 B)",
+          "$PLUGINSDIR/nsis7z.dll",
+          "$PLUGINSDIR/StdUtils.dll / System.dll / UAC.dll / WinShell.dll / nsDialogs.dll / nsExec.dll",
+          "$PLUGINSDIR/modern-wizard.bmp",
+          "$R0/Uninstall WorkBuddy.exe",
+          "resources/"
+        ]
+      },
+      "innerArchive": {
+        "path": "$PLUGINSDIR/app-64.7z",
+        "kinds": "应用完整树",
+        "topLevel": ["WorkBuddy.exe", "ffmpeg.dll", "libEGL.dll", "libGLESv2.dll", "d3dcompiler_47.dll", "resources.pak", "chrome_100_percent.pak", "chrome_200_percent.pak", "snapshot_blob.bin", "v8_context_snapshot.bin", "icudtl.dat", "locales/", "resources/", "Assets/"],
+        "hasAsar": true,
+        "complete": true
+      },
+      "appAsar": {
+        "readable": true,
+        "productName": "WorkBuddy",
+        "version": "5.8.3"
+      },
+      "fullDeploy": {
+        "executed": true,
+        "durationMs": 101196,
+        "targetSample": "artifacts/wb-official-deploy-*/managed/WorkBuddy-CN/versions/5.8.3",
+        "verified": ["WorkBuddy.exe", "resources/app.asar", "ffmpeg.dll", "完整应用树校验通过"],
+        "installerExecuted": false
+      }
+    },
+    {
+      "product": "workbuddy-ai",
+      "file": "workbuddy-ai-setup.exe",
+      "sizeBytes": 497735912,
+      "sha256": "1ca65684338e8b803afb246a0c4b7d49c90dcefcc30c296a1424bbfb9c80b843",
+      "authenticode": {
+        "status": "Valid",
+        "subject": "CN=Tencent Technology (Shenzhen) Company Limited, O=Tencent Technology (Shenzhen) Company Limited, L=Shenzhen, S=Guangdong Province, C=CN",
+        "thumbprint": "2241B013E2D6B9AAD7590E8056BF5E17CB1C795B"
+      },
+      "versionInfo": {
+        "productName": "WorkBuddy AI",
+        "fileDescription": "WorkBuddy Desktop - AI Agent Desktop Application",
+        "fileVersion": "5.8.4"
+      },
+      "container": {
+        "type": "NSIS 3 Unicode 自解压",
+        "outerEntries": 12,
+        "innerArchive": "$PLUGINSDIR/app-64.7z"
+      },
+      "appAsar": {
+        "readable": true,
+        "productName": "WorkBuddy AI",
+        "version": "5.8.4"
+      },
+      "fullDeploy": {
+        "executed": false,
+        "reason": "结构与国内版一致（同容器、同签名、同内层命名）；完整部署仅对国内版做了一次，避免重复占用磁盘"
+      }
+    }
+  ],
+  "findings": [
+    "两个产品的 Windows 包都是 NSIS 3 自解压：外壳 12 个条目，真实应用在 $PLUGINSDIR/app-64.7z 内。",
+    "管理器的 findInnerArchive 能直接命中 app-64.7z，部署管线无需改动即可处理真实官方包。",
+    "国内版包已实测完整部署成功（101 秒），目标目录通过完整应用树校验（主 exe + app.asar + runtime）。",
+    "安装包签名指纹 2241B013…795B 与本机已安装主程序指纹 E1B5824E…F4AB 不同：官方对包与主程序用不同证书，发布者基线必须按用途分开（已修复）。",
+    "国内版与国际版签名证书与指纹相同，仅产品名与版本不同（WorkBuddy 5.8.3 / WorkBuddy AI 5.8.4）。"
+  ],
+  "limits": [
+    "未运行安装器：注册表、快捷方式、服务、卸载项等副作用仍未知。",
+    "未验证部署后的客户端能否登录、能否自更新、能否被官方更新器识别。",
+    "官方在线版本 API 未核实；本文件只记录一次人工点击下载的结果，不能作为自动更新源。"
+  ]
+}

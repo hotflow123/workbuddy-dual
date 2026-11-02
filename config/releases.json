@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "products": {
+    "workbuddy-cn": {
+      "hosts": [],
+      "endpoint": null,
+      "schema": "unverified",
+      "channel": "stable"
+    },
+    "workbuddy-ai": {
+      "hosts": [],
+      "endpoint": null,
+      "schema": "unverified",
+      "channel": "stable"
+    }
+  }
+}

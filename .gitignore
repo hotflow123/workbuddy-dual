@@ -1,0 +1,44 @@
+node_modules/
+dist/
+release*/
+.release-staging/
+artifacts/
+coverage/
+.vitest-cache/
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+
+# 不随主项目发布的独立子项目
+activation-test-version/
+activation-code-generator/
+
+# 本地工作区数据（智能体会话、记忆、临时产物）
+.workbuddy/
+.workbuddy-ai/
+.workbuddy*/
+
+# 客户端安装包与用户数据绝不入库
+*.exe
+*.msi
+*.msix
+*.zip
+!node_modules/**/electron*.exe
+!resources/7zip/7za.exe
+
+# 本地证据/日志（含可能的本机路径）
+local-evidence/
+diagnostics/
+
+# 密钥/凭据：绝不入库
+.dev.vars
+.dev.vars.*
+.env
+.env.*
+*.pem
+*.key
+*.pfx
+*.p12
+wrangler.toml
+.wrangler/

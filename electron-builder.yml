@@ -1,0 +1,49 @@
+# electron-builder 配置（Windows x64，用户级 NSIS）
+# 目标：普通用户无需 Node.js 运行时即可安装并启动管理器；不要求管理员权限。
+appId: com.workbuddy.dualedition.manager
+productName: WorkBuddy Dual Edition Manager
+copyright: 内部工具，未签名测试构建
+
+directories:
+  output: release
+  buildResources: build
+
+files:
+  - dist/**/*
+  - package.json
+
+extraResources:
+  - from: config
+    to: config
+  # 官方 7-Zip Extra 组件：不安装到 Windows，也不依赖用户机器上的 7-Zip。
+  - from: resources/7zip
+    to: 7zip
+
+asar: true
+compression: normal
+
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+  artifactName: workbuddy-dual-edition-manager-${version}-x64.${ext}
+  # 未配置代码签名证书：正式发布前必须补齐（见 docs/RELEASE.md）
+  signAndEditExecutable: true
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowElevation: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: WorkBuddy 双版本共存管理器
+  deleteAppDataOnUninstall: false
+  runAfterFinish: false
+
+# 携带版：单个 exe，免安装、可直接拷到 U 盘；运行时解包到临时目录，
+# 数据目录由主进程重定向到 exe 同级的 WorkBuddyDualEdition-Data（见 src/main/index.ts）。
+portable:
+  artifactName: workbuddy-dual-edition-manager-${version}-x64-portable.${ext}
+  requestExecutionLevel: user
