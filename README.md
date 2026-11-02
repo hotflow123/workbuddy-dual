@@ -3,6 +3,8 @@
 让 **国内版 WorkBuddy** 和 **国际版 WorkBuddy AI** 装在同一台电脑上、各用各的目录，互不覆盖。
 
 Windows 10 / 11 x64。
+<img width="1166" height="813" alt="68d63b52-d490-4d02-b3bf-755cb5d5072b" src="https://github.com/user-attachments/assets/95c0bd24-5c9e-46c6-b2ab-b423b897b123" />
+
 
 ## 怎么用
 
